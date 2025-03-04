@@ -7,11 +7,12 @@ import * as postsService from '@/services/posts';
 export function usePosts() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [searchQuery, setSearchQuery] = useState('');
   const queryClient = useQueryClient();
 
   const { data: postsData, isLoading } = useQuery({
-    queryKey: ['posts', page, pageSize],
-    queryFn: () => postsService.getPosts(page, pageSize),
+    queryKey: ['posts', page, pageSize, searchQuery],
+    queryFn: () => postsService.getPosts({ page, per_page: pageSize, search: searchQuery }),
   });
 
   const createMutation = useMutation({
@@ -57,12 +58,19 @@ export function usePosts() {
     setPageSize(newPageSize);
   };
 
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+    setPage(1); // Reset to first page when searching
+  };
+
   return {
     page,
     pageSize,
+    searchQuery,
     setPage,
     setPageSize,
     handlePageChange,
+    handleSearch,
     postsData,
     isLoading,
     createPost: createMutation.mutate,

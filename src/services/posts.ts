@@ -10,12 +10,21 @@ export interface PostsResponse {
   limit: number;
 }
 
-export const getPosts = async (page: number = 1, per_page: number = 10): Promise<PostsResponse> => {
+export interface GetPostsParams {
+  page?: number;
+  per_page?: number;
+  search?: string;
+}
+
+export const getPosts = async ({ page = 1, per_page = 10, search = '' }: GetPostsParams = {}): Promise<PostsResponse> => {
   try {
+    const isIdSearch = !isNaN(Number(search)) && search !== '';
+    
     const response = await apiClient.get<Post[]>('/users/' + API_CONFIG.DEFAULT_USER_ID + '/posts', {
       params: {
         page,
         per_page,
+        ...(isIdSearch ? { id: Number(search) } : search ? { title: `%${search}%` } : {}),
       },
     });
 

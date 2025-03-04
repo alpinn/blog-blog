@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Table, Button, Modal, Popconfirm, Space, Typography, Pagination, Tooltip } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, PlusOutlined, EyeOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import AppLayout from '@/components/layout/AppLayout';
 import PostForm from '@/components/posts/PostForm';
@@ -13,7 +13,9 @@ const { Paragraph } = Typography;
 
 export default function PostsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
+  const [previewPost, setPreviewPost] = useState<Post | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   
   const { 
@@ -77,10 +79,21 @@ export default function PostsPage() {
     {
       title: 'Actions',
       key: 'actions',
-      width: '15%',
+      width: '25%',
       align: 'center',
       render: (_, record) => (
         <Space size="middle" className="flex justify-center w-full">
+          <Tooltip title="Preview post">
+            <Button
+              type="text"
+              icon={<EyeOutlined />}
+              onClick={() => {
+                setPreviewPost(record);
+                setIsPreviewOpen(true);
+              }}
+              className="text-green-500 hover:text-green-600 flex items-center justify-center"
+            />
+          </Tooltip>
           <Tooltip title="Edit post">
             <Button
               type="text"
@@ -148,18 +161,17 @@ export default function PostsPage() {
           </div>
 
           <div className="border border-gray-200 rounded-lg flex flex-col">
-            <div className="overflow-x-auto">
-              <div className="min-w-[600px] w-full">
-                <Table
-                  columns={columns}
-                  dataSource={postsData?.data}
-                  rowKey="id"
-                  loading={isLoading}
-                  pagination={false}
-                  className="[&_.ant-table-container]:!border-b-0 [&_.ant-table-cell]:!px-4"
-                  scroll={{ x: 600 }}
-                />
-              </div>
+            <div className="overflow-x-auto rounded-lg shadow-sm">
+              <Table
+                columns={columns}
+                dataSource={postsData?.data}
+                rowKey="id"
+                loading={isLoading}
+                pagination={false}
+                className="[&_.ant-table-container]:!border-b-0 [&_.ant-table-cell]:!px-4"
+                scroll={{ x: 'max-content' }}
+                style={{ minWidth: '600px' }}
+              />
             </div>
             <div className="py-4 px-6 border-t border-gray-200">
               <Pagination
@@ -196,6 +208,21 @@ export default function PostsPage() {
               onCancel={handleModalClose}
               isEdit={!!editingPost}
             />
+          </Modal>
+
+          <Modal
+            title="Preview Post"
+            open={isPreviewOpen}
+            onCancel={() => setIsPreviewOpen(false)}
+            footer={null}
+            width={600}
+          >
+            {previewPost && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold">{previewPost.title}</h2>
+                <p className="text-gray-600 whitespace-pre-wrap">{previewPost.body}</p>
+              </div>
+            )}
           </Modal>
         </div>
       </AppLayout>

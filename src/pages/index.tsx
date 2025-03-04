@@ -9,7 +9,7 @@ import { getPosts } from '@/services/posts';
 export default function HomePage() {
   const { data: postsData, isLoading } = useQuery({
     queryKey: ['posts', 1],
-    queryFn: () => getPosts(1),
+    queryFn: () => getPosts({ page: 1 }),
   });
 
   return (

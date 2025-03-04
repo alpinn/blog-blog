@@ -1,40 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Blog Blog - Modern Blog Platform
+
+A modern blog platform built with Next.js, TypeScript, Ant Design, and TailwindCSS. This application allows users to create, read, update, and delete blog posts through a clean and responsive interface.
+
+## Features
+
+- 📱 Responsive design - works on mobile, tablet, and desktop
+- ✨ Modern UI with Ant Design components
+- 🎨 Custom styling with TailwindCSS
+- 🔍 SEO optimized
+- 📝 Full CRUD operations for blog posts
+- 📊 Pagination and dynamic loading
+- 🎯 Type-safe with TypeScript
+- 🚀 Fast and optimized with Next.js
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js (v14 or higher)
+- npm or yarn
+- Git
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd blog-blog
+```
 
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
+Then edit `.env.local` and add your GoRest API token:
+- Get your token from [GoRest](https://gorest.co.in/)
+- Replace `your_gorest_token_here` with your actual token
+
+4. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
+blog-blog/
+├── src/
+│   ├── components/     # Reusable components
+│   ├── pages/         # Next.js pages
+│   ├── hooks/         # Custom React hooks
+│   ├── services/      # API services
+│   ├── types/         # TypeScript types
+│   ├── utils/         # Utility functions
+│   └── styles/        # Global styles
+├── public/            # Static files
+└── ...config files
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` - Starts the development server
+- `npm run build` - Builds the app for production
+- `npm start` - Runs the built app in production mode
+- `npm run lint` - Runs ESLint for code quality
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Ant Design](https://ant.design/) - UI components
+- [TailwindCSS](https://tailwindcss.com/) - Styling
+- [React Query](https://tanstack.com/query/latest) - Data fetching
+- [GoRest API](https://gorest.co.in/) - Backend API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## Features in Detail
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Blog Posts
+- View all posts with pagination
+- Create new posts
+- Edit existing posts
+- Delete posts
+- Responsive post cards
+- Rich text content
 
-## Deploy on Vercel
+### UI/UX
+- Clean and modern design
+- Responsive navigation
+- Loading states
+- Error handling
+- Form validation
+- Confirmation dialogs
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request

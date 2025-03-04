@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Table, Button, Modal, Popconfirm, Space, Typography, Pagination, Tooltip } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import AppLayout from '@/components/layout/AppLayout';
 import PostForm from '@/components/posts/PostForm';
+import SearchBar from '@/components/posts/SearchBar';
 import { usePosts } from '@/hooks/usePosts';
 import { Post } from '@/types/post';
 import SEO from '@/components/common/SEO';
@@ -13,6 +14,8 @@ const { Paragraph } = Typography;
 export default function PostsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  
   const { 
     page, 
     pageSize,
@@ -21,7 +24,8 @@ export default function PostsPage() {
     isLoading, 
     createPost, 
     updatePost, 
-    deletePost 
+    deletePost,
+    handleSearch,
   } = usePosts();
 
   const handleModalClose = () => {
@@ -116,17 +120,31 @@ export default function PostsPage() {
       />
       <AppLayout>
         <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex flex-col gap-4">
             <h1 className="text-2xl font-bold m-0">Blog Posts</h1>
-            <Button
-              type="primary"
-              onClick={() => {
-                setEditingPost(null);
-                setIsModalOpen(true);
-              }}
-            >
-              Create Post
-            </Button>
+            
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="w-full sm:w-auto order-2 sm:order-1">
+                <SearchBar
+                  onSearch={(value) => {
+                    setSearchQuery(value);
+                    handleSearch(value);
+                  }}
+                />
+              </div>
+              
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  setEditingPost(null);
+                  setIsModalOpen(true);
+                }}
+                className="w-full sm:w-auto order-1 sm:order-2"
+              >
+                Create Post
+              </Button>
+            </div>
           </div>
 
           <div className="border border-gray-200 rounded-lg flex flex-col">

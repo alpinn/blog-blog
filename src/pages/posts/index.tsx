@@ -40,7 +40,7 @@ export default function PostsPage() {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      width: '20%',
+      width: '10%',
       align: 'center',
       render: (id) => (
         <span className="text-gray-500">{id}</span>
@@ -50,30 +50,26 @@ export default function PostsPage() {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      ellipsis: true,
-      width: '35%',
+      width: '30%',
       render: (text) => (
-        <Paragraph
-          ellipsis={{ rows: 2, tooltip: text }}
-          className="mb-0 font-medium"
-        >
-          {text}
-        </Paragraph>
+        <Tooltip title="Click preview to see full content">
+          <div className="font-medium">
+            {text.length > 50 ? `${text.slice(0, 50)}...` : text}
+          </div>
+        </Tooltip>
       ),
     },
     {
       title: 'Content',
       dataIndex: 'body',
       key: 'body',
-      ellipsis: true,
-      width: '40%',
+      width: '35%',
       render: (text) => (
-        <Paragraph
-          ellipsis={{ rows: 3, tooltip: text }}
-          className="mb-0 text-gray-600"
-        >
-          {text}
-        </Paragraph>
+        <Tooltip title="Click preview to see full content">
+          <div className="text-gray-600">
+            {text.length > 100 ? `${text.slice(0, 100)}...` : text}
+          </div>
+        </Tooltip>
       ),
     },
     {
@@ -169,8 +165,8 @@ export default function PostsPage() {
                 loading={isLoading}
                 pagination={false}
                 className="[&_.ant-table-container]:!border-b-0 [&_.ant-table-cell]:!px-4"
-                scroll={{ x: 'max-content' }}
-                style={{ minWidth: '600px' }}
+                scroll={{ x: 800 }}
+                style={{ minWidth: '800px' }}
               />
             </div>
             <div className="py-4 px-6 border-t border-gray-200">

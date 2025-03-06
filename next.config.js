@@ -7,14 +7,22 @@ const nextConfig = {
     'rc-util',
     'rc-pagination',
     'rc-picker',
-    'rc-input'
+    'rc-input',
+    'rc-tree',
+    'rc-table',
+    'rc-field-form',
+    'rc-dropdown',
+    'rc-menu',
+    'rc-virtual-list',
+    'rc-trigger'
   ],
   experimental: {
-    esmExternals: true
+    esmExternals: 'loose'
   },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.m?js$/,
+      type: 'javascript/auto',
       resolve: {
         fullySpecified: false,
       },

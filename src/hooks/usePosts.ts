@@ -50,17 +50,17 @@ export function usePosts() {
   });
 
   const handlePageChange = (newPage: number, newPageSize: number) => {
+    setPageSize(newPageSize);
     if (newPageSize !== pageSize) {
       setPage(1);
     } else {
       setPage(newPage);
     }
-    setPageSize(newPageSize);
   };
 
   const handleSearch = (value: string) => {
     setSearchQuery(value);
-    setPage(1); // Reset to first page when searching
+    setPage(1);
   };
 
   return {

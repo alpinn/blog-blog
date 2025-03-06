@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Table, Button, Modal, Popconfirm, Space, Typography, Pagination, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined, EyeOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
@@ -35,7 +35,7 @@ export default function PostsPage() {
     setEditingPost(null);
   };
 
-  const columns: ColumnsType<Post> = [
+  const columns: ColumnsType<Post> = useMemo(() => [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -119,7 +119,18 @@ export default function PostsPage() {
         </Space>
       ),
     },
-  ];
+  ], []);
+
+  const tableProps = useMemo(() => ({
+    columns,
+    dataSource: postsData?.data,
+    rowKey: "id",
+    loading: isLoading,
+    pagination: false as const,
+    className: "[&_.ant-table-container]:!border-b-0 [&_.ant-table-cell]:!px-4",
+    scroll: { x: 800 },
+    style: { minWidth: '800px' }
+  }), [columns, postsData?.data, isLoading]);
 
   return (
     <>
@@ -158,16 +169,7 @@ export default function PostsPage() {
 
           <div className="border border-gray-200 rounded-lg flex flex-col">
             <div className="overflow-x-auto rounded-lg shadow-sm">
-              <Table
-                columns={columns}
-                dataSource={postsData?.data}
-                rowKey="id"
-                loading={isLoading}
-                pagination={false}
-                className="[&_.ant-table-container]:!border-b-0 [&_.ant-table-cell]:!px-4"
-                scroll={{ x: 800 }}
-                style={{ minWidth: '800px' }}
-              />
+              <Table {...tableProps} />
             </div>
             <div className="py-4 px-6 border-t border-gray-200">
               <Pagination

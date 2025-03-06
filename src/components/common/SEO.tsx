@@ -34,6 +34,11 @@ export default function SEO({
       <meta name="twitter:image" content={ogImage} />
       
       <link rel="icon" href="/favicon.ico" />
+      
+      {/* Performance Optimizations */}
+      <link rel="preconnect" href="https://gorest.co.in" />
+      <link rel="dns-prefetch" href="https://gorest.co.in" />
+      <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" />
     </Head>
   );
 } 

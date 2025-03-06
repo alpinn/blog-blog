@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Table, Button, Modal, Popconfirm, Space, Typography, Pagination, Tooltip } from 'antd';
+import { useState, useMemo, useEffect } from 'react';
+import { Table, Button, Modal, Popconfirm, Space, Typography, Pagination, Tooltip, Select } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined, EyeOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import AppLayout from '@/components/layout/AppLayout';
@@ -17,6 +17,7 @@ export default function PostsPage() {
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [previewPost, setPreviewPost] = useState<Post | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
   
   const { 
     page, 
@@ -29,6 +30,19 @@ export default function PostsPage() {
     deletePost,
     handleSearch,
   } = usePosts();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -172,15 +186,29 @@ export default function PostsPage() {
               <Table {...tableProps} />
             </div>
             <div className="py-4 px-6 border-t border-gray-200">
-              <Pagination
-                current={page}
-                pageSize={pageSize}
-                total={postsData?.total}
-                onChange={handlePageChange}
-                showSizeChanger={true}
-                pageSizeOptions={[10, 20, 50]}
-                className="flex justify-center"
-              />
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4"> 
+                <Pagination
+                  current={page}
+                  pageSize={pageSize}
+                  total={postsData?.total}
+                  onChange={handlePageChange}
+                  showSizeChanger={!isMobile}
+                  pageSizeOptions={[10, 20, 50]}
+                  className="flex justify-center"
+                />
+                 {isMobile && (
+                  <Select
+                    value={pageSize}
+                    onChange={(value) => handlePageChange(1, value)}
+                    options={[
+                      { value: 10, label: '10 / page' },
+                      { value: 20, label: '20 / page' },
+                      { value: 50, label: '50 / page' },
+                    ]}
+                    className="w-32"
+                  />
+                )}
+              </div>
             </div>
           </div>
 
